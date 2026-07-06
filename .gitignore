@@ -1,8 +1,25 @@
-﻿node_modules/
+﻿# macOS
+.DS_Store
+
+# 환경 변수
 .env
 .env.local
+.env.*.local
+
+# Node
+node_modules/
 dist/
 build/
 .next/
 .vite/
-.DS_Store
+*.log
+
+# 에디터
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# 로컬 캐시
+.cache/
+tmp/
