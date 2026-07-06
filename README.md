@@ -4,7 +4,7 @@
 
 ## 개발 시작
 
-`ash
+`bash
 # 패키지 설치
 npm install
 
