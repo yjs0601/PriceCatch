@@ -1,8 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { View } from "../App";
 import type { Product } from "../types";
 import { lowestPlatform } from "../types";
 import ProductCard from "./ProductCard";
+
+const HERO_SLIDES = [
+  "지금이 살 타이밍인지, PriceCatch가 알려드립니다",
+  "여러 쇼핑몰의 최저가를 한 화면에서 비교하세요",
+  "로그인 없이 바로 관심 상품을 등록하고 추적해보세요",
+];
+
+const HERO_INTERVAL_MS = 2500;
+
+function HeroBanner() {
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, HERO_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [slide]);
+
+  return (
+    <div>
+      <section className="flex h-[220px] items-center justify-center rounded bg-ink-50 px-6 text-center">
+        <p className="max-w-md text-sm text-ink-700">{HERO_SLIDES[slide]}</p>
+      </section>
+      <div className="mt-3 flex justify-center gap-1.5">
+        {HERO_SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setSlide(i)}
+            aria-label={`${i + 1}번 슬라이드로 이동`}
+            className={`h-1.5 cursor-pointer rounded-full transition-all ${
+              i === slide ? "w-5 bg-brand-600" : "w-1.5 bg-ink-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 type HomeProps = {
   products: Product[];
@@ -34,11 +73,7 @@ export default function Home({ products, categories, onSelectProduct, onNavigate
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">
-      <section className="flex h-[220px] items-center justify-center rounded bg-ink-50 px-6 text-center">
-        <p className="max-w-md text-sm text-ink-700">
-          지금이 살 타이밍인지, <span className="font-semibold text-brand-600">PriceCatch</span>가 알려드립니다
-        </p>
-      </section>
+      <HeroBanner />
 
       <section className="mt-8">
         <h2 className="mb-3 text-center text-base font-bold text-ink-900">인기 카테고리</h2>
