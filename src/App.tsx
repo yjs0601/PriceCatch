@@ -121,6 +121,7 @@ export default function App() {
 
       {view.name === "search" && (
         <SearchResults
+          key={view.category ?? "전체"}
           products={products}
           categories={categories}
           initialCategory={view.category}
