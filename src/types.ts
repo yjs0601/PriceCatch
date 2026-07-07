@@ -22,6 +22,9 @@ export type Product = {
   name: string;
   category: string;
   emoji: string;
+  brand?: string;
+  rating?: number;
+  shippingFee?: number;
   platforms: Platform[];
   priceHistory: PricePoint[];
   alert: AlertSettings;

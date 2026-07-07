@@ -25,11 +25,11 @@ const CONDITIONS: { value: NotifyCondition; label: string; description: string }
 
 export default function AlertSettings({ alert, onChange }: AlertSettingsProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className="rounded border border-ink-100 bg-white p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="font-semibold text-slate-900">알림 설정</h3>
+        <h3 className="font-semibold text-ink-900">알림 설정</h3>
         <label className="inline-flex cursor-pointer items-center gap-2 text-sm">
-          <span className="text-slate-500">{alert.enabled ? "켜짐" : "꺼짐"}</span>
+          <span className="text-ink-500">{alert.enabled ? "켜짐" : "꺼짐"}</span>
           <span className="relative inline-block h-5 w-9">
             <input
               type="checkbox"
@@ -37,33 +37,33 @@ export default function AlertSettings({ alert, onChange }: AlertSettingsProps) {
               checked={alert.enabled}
               onChange={(e) => onChange({ ...alert, enabled: e.target.checked })}
             />
-            <span className="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-brand-600" />
+            <span className="absolute inset-0 rounded-full bg-ink-100 transition peer-checked:bg-brand-600" />
             <span className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-4" />
           </span>
         </label>
       </div>
 
       <div className={alert.enabled ? "" : "pointer-events-none opacity-40"}>
-        <label className="block text-xs font-medium text-slate-500">목표 가격</label>
+        <label className="block text-xs font-medium text-ink-500">목표 가격</label>
         <div className="mt-1 flex items-center gap-2">
           <input
             type="number"
             value={alert.targetPrice}
             onChange={(e) => onChange({ ...alert, targetPrice: Number(e.target.value) })}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+            className="w-full rounded-lg border border-ink-100 px-3 py-2 text-sm transition-colors focus:border-brand-400 focus:outline-none"
           />
-          <span className="text-sm text-slate-400">원</span>
+          <span className="text-sm text-ink-500">원</span>
         </div>
 
-        <label className="mt-4 block text-xs font-medium text-slate-500">알림 조건</label>
+        <label className="mt-4 block text-xs font-medium text-ink-500">알림 조건</label>
         <div className="mt-1.5 flex flex-col gap-2">
           {CONDITIONS.map((c) => (
             <label
               key={c.value}
-              className={`flex cursor-pointer items-start gap-2 rounded-lg border px-3 py-2 text-sm transition ${
+              className={`flex cursor-pointer items-start gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
                 alert.condition === c.value
                   ? "border-brand-300 bg-brand-50"
-                  : "border-slate-100 bg-slate-50"
+                  : "border-ink-100 bg-ink-50 hover:border-ink-300"
               }`}
             >
               <input
@@ -74,14 +74,14 @@ export default function AlertSettings({ alert, onChange }: AlertSettingsProps) {
                 onChange={() => onChange({ ...alert, condition: c.value })}
               />
               <span>
-                <span className="block font-medium text-slate-700">{c.label}</span>
-                <span className="block text-xs text-slate-400">{c.description}</span>
+                <span className="block font-medium text-ink-700">{c.label}</span>
+                <span className="block text-xs text-ink-500">{c.description}</span>
               </span>
             </label>
           ))}
         </div>
       </div>
-      <p className="mt-3 text-[11px] text-slate-400">변경사항은 자동으로 저장됩니다.</p>
+      <p className="mt-3 text-[11px] text-ink-500">변경사항은 자동으로 저장됩니다.</p>
     </div>
   );
 }
