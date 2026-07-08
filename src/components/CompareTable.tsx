@@ -1,6 +1,7 @@
 import type { Product } from "../types";
 import { lowestPlatform } from "../types";
 import { formatKRW } from "../utils/format";
+import ProductThumb from "./ProductThumb";
 
 type CompareTableProps = {
   products: Product[];
@@ -34,7 +35,15 @@ export default function CompareTable({
   }
 
   const rows: { label: string; render: (p: Product) => React.ReactNode }[] = [
-    { label: "이미지", render: (p) => <span className="text-3xl">{p.emoji}</span> },
+    {
+      label: "이미지",
+      render: (p) => (
+        <ProductThumb
+          product={p}
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded bg-ink-50 text-3xl"
+        />
+      ),
+    },
     { label: "가격", render: (p) => formatKRW(lowestPlatform(p).price) },
     {
       label: "배송비",

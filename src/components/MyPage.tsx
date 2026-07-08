@@ -3,6 +3,7 @@ import type { Product } from "../types";
 import { isBuyTiming, lowestPlatform, percentToTarget } from "../types";
 import { formatKRW } from "../utils/format";
 import type { AuthUser } from "../utils/auth";
+import ProductThumb from "./ProductThumb";
 
 type MyPageProps = {
   products: Product[];
@@ -108,9 +109,10 @@ export default function MyPage({
                         <tr key={product.id} className="border-b border-ink-100 last:border-b-0">
                           <td className="p-3">
                             <div className="flex items-center gap-2.5">
-                              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-ink-50 text-lg">
-                                {product.emoji}
-                              </span>
+                              <ProductThumb
+                                product={product}
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-ink-50 text-lg"
+                              />
                               <span className="text-ink-900">{product.name}</span>
                             </div>
                           </td>
@@ -162,9 +164,10 @@ export default function MyPage({
                     className="flex items-center justify-between rounded border border-ink-100 px-4 py-3"
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-ink-50 text-base">
-                        {product.emoji}
-                      </span>
+                      <ProductThumb
+                        product={product}
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-ink-50 text-base"
+                      />
                       <span className="text-sm text-ink-900">{product.name}</span>
                       <span
                         className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${

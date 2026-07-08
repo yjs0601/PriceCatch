@@ -21,10 +21,13 @@ export type Product = {
   id: string;
   name: string;
   category: string;
+  subCategory: string;
   emoji: string;
+  image?: string;
   brand?: string;
   rating?: number;
   shippingFee?: number;
+  views?: number;
   platforms: Platform[];
   priceHistory: PricePoint[];
   alert: AlertSettings;

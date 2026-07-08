@@ -29,8 +29,10 @@ function buildProductFromInput(input: RegisterProductInput): Product {
     id: crypto.randomUUID(),
     name: input.name,
     category: input.category,
+    subCategory: "기타",
     emoji: "🛍️",
     rating: 4.0,
+    views: 0,
     shippingFee: 0,
     platforms: [
       { name: "쿠팡", price: basePrice, url: input.url || "#" },
@@ -123,7 +125,6 @@ export default function App() {
         <SearchResults
           key={view.category ?? "전체"}
           products={products}
-          categories={categories}
           initialCategory={view.category}
           trackedIds={trackedIds}
           onToggleTracked={toggleTracked}

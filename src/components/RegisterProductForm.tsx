@@ -12,7 +12,7 @@ type RegisterProductFormProps = {
   onSubmit: (input: RegisterProductInput) => void;
 };
 
-const CATEGORY_SUGGESTIONS = ["전자기기", "노트북", "가전", "뷰티", "생활용품"];
+const CATEGORY_SUGGESTIONS = ["PC/전자기기", "가전", "신발", "뷰티"];
 
 export default function RegisterProductForm({ onClose, onSubmit }: RegisterProductFormProps) {
   const [name, setName] = useState("");

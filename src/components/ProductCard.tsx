@@ -2,13 +2,15 @@ import { LineChart, Line, ResponsiveContainer } from "recharts";
 import type { Product } from "../types";
 import { lowestPlatform, isBuyTiming, percentToTarget } from "../types";
 import { formatKRW } from "../utils/format";
+import ProductThumb from "./ProductThumb";
 
 type ProductCardProps = {
   product: Product;
   onClick: () => void;
+  variant?: "default" | "glass";
 };
 
-export default function ProductCard({ product, onClick }: ProductCardProps) {
+export default function ProductCard({ product, onClick, variant = "default" }: ProductCardProps) {
   const best = lowestPlatform(product);
   const buyTiming = isBuyTiming(product);
   const progress = percentToTarget(product);
@@ -16,13 +18,18 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <button
       onClick={onClick}
-      className="flex w-full cursor-pointer flex-col rounded border border-ink-100 bg-white p-4 text-left transition-colors hover:border-ink-300"
+      className={`flex w-full cursor-pointer flex-col rounded p-4 text-left transition-all ${
+        variant === "glass"
+          ? "border border-white/50 bg-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl hover:bg-white/35"
+          : "border border-ink-100 bg-white transition-colors hover:border-ink-300"
+      }`}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-ink-50 text-xl">
-            {product.emoji}
-          </span>
+          <ProductThumb
+            product={product}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-ink-50 text-xl"
+          />
           <div className="min-w-0">
             <p className="text-xs text-ink-500">{product.category}</p>
             <h3 className="line-clamp-1 font-semibold text-ink-900">{product.name}</h3>

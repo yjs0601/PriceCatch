@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { Product } from "../types";
 import { lowestPlatform } from "../types";
+import { getSubCategories } from "../utils/categories";
 import ProductCard from "./ProductCard";
 
 type SearchResultsProps = {
   products: Product[];
-  categories: string[];
   initialCategory?: string;
   trackedIds: Set<string>;
   onToggleTracked: (id: string) => void;
@@ -21,11 +21,8 @@ const PRICE_RANGES = [
   { label: "100만원 이상", test: (price: number) => price > 1000000 },
 ];
 
-const BRAND_OPTIONS = ["삼성", "LG", "애플"];
-
 export default function SearchResults({
   products,
-  categories,
   initialCategory,
   trackedIds,
   onToggleTracked,
@@ -34,8 +31,11 @@ export default function SearchResults({
   onSelectProduct,
   onGoToCompare,
 }: SearchResultsProps) {
-  const [category, setCategory] = useState<string>(initialCategory ?? "전체");
+  const category = initialCategory ?? "전체";
+  const [subCategory, setSubCategory] = useState<string>("전체");
   const [priceFilters, setPriceFilters] = useState<Set<string>>(new Set());
+
+  const subCategories = category === "전체" ? [] : getSubCategories(products, category);
 
   function togglePriceFilter(label: string) {
     setPriceFilters((prev) => {
@@ -48,6 +48,7 @@ export default function SearchResults({
 
   const filtered = products
     .filter((p) => category === "전체" || p.category === category)
+    .filter((p) => category === "전체" || subCategory === "전체" || p.subCategory === subCategory)
     .filter((p) => {
       if (priceFilters.size === 0) return true;
       const price = lowestPlatform(p).price;
@@ -60,24 +61,36 @@ export default function SearchResults({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">
-      <div className="mb-4 flex flex-wrap gap-2">
-        {["전체", ...categories].map((c) => (
-          <button
-            key={c}
-            onClick={() => setCategory(c)}
-            className={`cursor-pointer rounded-lg border px-3.5 py-1.5 text-xs transition-colors ${
-              category === c
-                ? "border-brand-600 bg-brand-50 text-brand-700"
-                : "border-ink-300 text-ink-700 hover:bg-ink-50"
-            }`}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
+      <h1 className="mb-4 text-lg font-bold text-ink-900">
+        {category === "전체"
+          ? "전체 상품"
+          : subCategory === "전체"
+            ? category
+            : `${category} · ${subCategory}`}
+      </h1>
 
       <div className="flex gap-6">
         <aside className="hidden w-[180px] shrink-0 flex-col gap-4 sm:flex">
+          {subCategories.length > 0 && (
+            <div className="rounded border border-ink-100 p-4">
+              <p className="mb-2 text-xs font-medium text-ink-900">{category} 카테고리</p>
+              <div className="flex flex-col gap-1">
+                {["전체", ...subCategories].map((sc) => (
+                  <button
+                    key={sc}
+                    onClick={() => setSubCategory(sc)}
+                    className={`cursor-pointer rounded px-2 py-1 text-left text-xs transition-colors ${
+                      subCategory === sc
+                        ? "bg-brand-50 font-medium text-brand-700"
+                        : "text-ink-700 hover:bg-ink-50"
+                    }`}
+                  >
+                    {sc}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="rounded border border-ink-100 p-4">
             <p className="mb-2 text-xs font-medium text-ink-900">가격대</p>
             <div className="flex flex-col gap-1.5">
@@ -92,20 +105,6 @@ export default function SearchResults({
                     onChange={() => togglePriceFilter(range.label)}
                   />
                   {range.label}
-                </label>
-              ))}
-            </div>
-          </div>
-          <div className="rounded border border-ink-100 p-4">
-            <p className="mb-2 text-xs font-medium text-ink-900">브랜드</p>
-            <div className="flex flex-col gap-1.5">
-              {BRAND_OPTIONS.map((brand) => (
-                <label
-                  key={brand}
-                  className="flex cursor-pointer items-center gap-1.5 text-xs text-ink-700"
-                >
-                  <input type="checkbox" disabled />
-                  {brand}
                 </label>
               ))}
             </div>

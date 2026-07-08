@@ -1,10 +1,6 @@
 import type { View } from "../App";
 import type { AuthUser } from "../utils/auth";
 
-const NAV_LABEL: Record<string, string> = {
-  노트북: "컴퓨터 · 노트북",
-};
-
 type HeaderProps = {
   categories: string[];
   onNavigate: (view: View) => void;
@@ -29,7 +25,7 @@ export default function Header({
   onBack,
 }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-10 border-b border-white/40 bg-white/60 backdrop-blur-md">
+    <header className="sticky top-0 z-10">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3.5">
         <div className="flex items-center gap-3">
           {showBack && (
@@ -61,14 +57,14 @@ export default function Header({
           </button>
         </div>
 
-        <nav className="hidden items-center gap-5 sm:flex">
+        <nav className="hidden items-center gap-5 ml-5 sm:flex">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => onNavigate({ name: "search", category })}
               className="cursor-pointer whitespace-nowrap text-sm text-ink-700 transition-colors hover:text-ink-900"
             >
-              {NAV_LABEL[category] ?? category}
+              {category}
             </button>
           ))}
           <button
@@ -80,34 +76,33 @@ export default function Header({
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={onRegisterClick}
-            className="cursor-pointer whitespace-nowrap rounded-lg border border-white/70 bg-white/30 px-3.5 py-2 text-xs font-medium text-ink-900 backdrop-blur-sm transition-colors hover:bg-white/50"
-          >
-            + 상품 등록
-          </button>
-
           {user ? (
             <>
               <span className="hidden text-xs text-ink-700 sm:inline">{user.name}님</span>
               <button
-                onClick={onSignOut}
-                className="cursor-pointer rounded-lg border border-white/70 bg-white/30 px-3.5 py-2 text-xs font-medium text-ink-900 backdrop-blur-sm transition-colors hover:bg-white/50"
+                onClick={onRegisterClick}
+                className="cursor-pointer whitespace-nowrap rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"
               >
-                로그아웃
+                + 상품 등록
+              </button>
+              <button
+                onClick={onSignOut}
+                className="cursor-pointer rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"
+              >
+                Sign out
               </button>
             </>
           ) : (
             <>
               <button
                 onClick={onSignInClick}
-                className="cursor-pointer rounded-lg border border-white/70 bg-white/30 px-3.5 py-2 text-xs font-medium text-ink-900 backdrop-blur-sm transition-colors hover:bg-white/50"
+                className="cursor-pointer rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"
               >
                 Sign in
               </button>
               <button
                 onClick={onSignUpClick}
-                className="cursor-pointer whitespace-nowrap rounded-lg border border-white/70 bg-white/30 px-3.5 py-2 text-xs font-medium text-ink-900 backdrop-blur-sm transition-colors hover:bg-white/50"
+                className="cursor-pointer whitespace-nowrap rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"
               >
                 Sign up
               </button>

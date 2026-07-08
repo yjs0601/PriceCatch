@@ -43,6 +43,21 @@ export async function signIn(email: string, password: string): Promise<AuthUser>
   return user;
 }
 
+const GOOGLE_MOCK_USER: AuthUser = { email: "google.user@gmail.com", name: "Google 사용자" };
+
+// Mock Google sign-in — no real Google OAuth wired up yet. Swap this for
+// Google Identity Services (One Tap / OAuth code flow) once a Client ID
+// and backend token exchange are ready; keep the AuthUser return shape.
+export async function signInWithGoogleMock(): Promise<AuthUser> {
+  const users = readUsers();
+  if (!users[GOOGLE_MOCK_USER.email]) {
+    users[GOOGLE_MOCK_USER.email] = { name: GOOGLE_MOCK_USER.name, password: "" };
+    writeUsers(users);
+  }
+  localStorage.setItem(SESSION_KEY, JSON.stringify(GOOGLE_MOCK_USER));
+  return GOOGLE_MOCK_USER;
+}
+
 export function signOut() {
   localStorage.removeItem(SESSION_KEY);
 }
