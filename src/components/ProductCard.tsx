@@ -7,10 +7,9 @@ import ProductThumb from "./ProductThumb";
 type ProductCardProps = {
   product: Product;
   onClick: () => void;
-  variant?: "default" | "glass";
 };
 
-export default function ProductCard({ product, onClick, variant = "default" }: ProductCardProps) {
+export default function ProductCard({ product, onClick }: ProductCardProps) {
   const best = lowestPlatform(product);
   const buyTiming = isBuyTiming(product);
   const progress = percentToTarget(product);
@@ -18,11 +17,7 @@ export default function ProductCard({ product, onClick, variant = "default" }: P
   return (
     <button
       onClick={onClick}
-      className={`flex w-full cursor-pointer flex-col rounded p-4 text-left transition-all ${
-        variant === "glass"
-          ? "border border-white/50 bg-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl hover:bg-white/35"
-          : "border border-ink-100 bg-white transition-colors hover:border-ink-300"
-      }`}
+      className="flex w-full cursor-pointer flex-col rounded-2xl border border-white/50 bg-white/25 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-white/35"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
@@ -35,12 +30,14 @@ export default function ProductCard({ product, onClick, variant = "default" }: P
             <h3 className="line-clamp-1 font-semibold text-ink-900">{product.name}</h3>
           </div>
         </div>
-        {buyTiming && (
-          <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-brand-50 px-2 py-1 text-xs font-medium text-brand-700">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />
-            지금 사도 좋아요
-          </span>
-        )}
+        <span
+          className={`flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-brand-50 px-2 py-1 text-xs font-medium text-brand-700 ${
+            buyTiming ? "" : "invisible"
+          }`}
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />
+          지금 사도 좋아요
+        </span>
       </div>
 
       <div className="mt-3 h-10 w-full">

@@ -29,7 +29,7 @@ export default function ProductDetail({
       <div className="mb-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         <ProductThumb
           product={product}
-          className="flex h-[250px] min-h-[150px] w-full shrink-0 items-center justify-center self-start rounded-xl bg-ink-50 text-3xl"
+          className="mt-20 flex h-[320px] min-h-[150px] w-full shrink-0 items-center justify-center self-start rounded-xl bg-ink-50 text-3xl"
         />
 
         <div className="flex flex-col gap-4 sm:col-span-2">

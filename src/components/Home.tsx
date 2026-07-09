@@ -99,6 +99,38 @@ function HeroBanner({ products, onSelectProduct }: HeroBannerProps) {
           </button>
         )}
 
+        {slide === 2 && popular && (
+          <button
+            key={2}
+            onClick={() => onSelectProduct(popular.id)}
+            className="absolute inset-3 flex animate-[fade-in-up_0.5s_ease-out] cursor-pointer flex-col items-center justify-center gap-6 rounded-2xl p-6 text-left transition-colors hover:bg-white/10 sm:inset-5"
+          >
+            <div className="flex w-full max-w-2xl items-center gap-6">
+              <ProductThumb
+                product={popular}
+                className="flex h-28 w-28 shrink-0 items-center justify-center rounded-xl bg-white/50 text-5xl sm:h-36 sm:w-36"
+              />
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-brand-700">🏆 지금 가장 인기있는 상품</p>
+                <h3 className="mt-1 truncate text-2xl font-bold text-ink-900 sm:text-3xl">
+                  {popular.name}
+                </h3>
+                <p className="mt-2 text-3xl font-extrabold text-ink-900">
+                  {formatKRW(lowestPlatform(popular).price)}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-end gap-1 text-right">
+                <span className="rounded-full bg-white/50 px-3 py-1 text-xs font-semibold text-ink-900">
+                  ⭐ {popular.rating?.toFixed(1) ?? "-"}
+                </span>
+                <span className="text-xs text-ink-500">
+                  누적 조회 {(popular.views ?? 0).toLocaleString("ko-KR")}회
+                </span>
+              </div>
+            </div>
+          </button>
+        )}
+
         <div className="relative flex h-full items-center justify-center px-6 text-center sm:px-12">
           {slide === 0 && (
             <div
@@ -117,34 +149,6 @@ function HeroBanner({ products, onSelectProduct }: HeroBannerProps) {
                 여러 쇼핑몰의 가격을 한눈에 비교하고, 가장 쌀 때 알림을 받아보세요.
               </p>
             </div>
-          )}
-
-          {slide === 2 && popular && (
-            <button
-              key={2}
-              onClick={() => onSelectProduct(popular.id)}
-              className="flex w-full max-w-2xl animate-[fade-in-up_0.5s_ease-out] cursor-pointer items-center gap-6 rounded-2xl border border-white/60 bg-white/30 p-6 text-left backdrop-blur-md transition-colors hover:bg-white/40"
-            >
-              <ProductThumb
-                product={popular}
-                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-white/50 text-4xl"
-              />
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-brand-700">🏆 지금 가장 인기있는 상품</p>
-                <h3 className="mt-1 truncate text-lg font-bold text-ink-900">{popular.name}</h3>
-                <p className="mt-1 text-2xl font-extrabold text-ink-900">
-                  {formatKRW(lowestPlatform(popular).price)}
-                </p>
-              </div>
-              <div className="flex shrink-0 flex-col items-end gap-1 text-right">
-                <span className="rounded-full bg-white/50 px-3 py-1 text-xs font-semibold text-ink-900">
-                  ⭐ {popular.rating?.toFixed(1) ?? "-"}
-                </span>
-                <span className="text-xs text-ink-500">
-                  누적 조회 {(popular.views ?? 0).toLocaleString("ko-KR")}회
-                </span>
-              </div>
-            </button>
           )}
         </div>
       </section>
@@ -240,7 +244,6 @@ export default function Home({ products, categories, onSelectProduct, onNavigate
                 key={product.id}
                 product={product}
                 onClick={() => onSelectProduct(product.id)}
-                variant="glass"
               />
             ))}
           </div>
