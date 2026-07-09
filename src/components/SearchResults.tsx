@@ -72,7 +72,7 @@ export default function SearchResults({
       <div className="flex gap-6">
         <aside className="hidden w-[180px] shrink-0 flex-col gap-4 sm:flex">
           {subCategories.length > 0 && (
-            <div className="rounded border border-ink-100 p-4">
+            <div className="rounded-2xl border border-white/50 bg-white/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
               <p className="mb-2 text-xs font-medium text-ink-900">{category} 카테고리</p>
               <div className="flex flex-col gap-1">
                 {["전체", ...subCategories].map((sc) => (
@@ -91,7 +91,7 @@ export default function SearchResults({
               </div>
             </div>
           )}
-          <div className="rounded border border-ink-100 p-4">
+          <div className="rounded-2xl border border-white/50 bg-white/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
             <p className="mb-2 text-xs font-medium text-ink-900">가격대</p>
             <div className="flex flex-col gap-1.5">
               {PRICE_RANGES.map((range) => (
@@ -134,7 +134,11 @@ export default function SearchResults({
                 <ProductCard product={product} onClick={() => onSelectProduct(product.id)} />
                 <button
                   onClick={() => onToggleTracked(product.id)}
-                  className="w-full cursor-pointer rounded-lg py-1.5 text-xs font-medium text-brand-600 ring-1 ring-inset ring-brand-200 transition-colors hover:bg-brand-50"
+                  className={`w-full cursor-pointer rounded-lg py-1.5 text-xs font-medium backdrop-blur-2xl transition-all ${
+                    trackedIds.has(product.id)
+                      ? "bg-[linear-gradient(135deg,rgba(15,110,86,0.5)_0%,rgba(15,110,86,0.3)_100%)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_6px_14px_-10px_rgba(0,0,0,0.35)] hover:bg-[linear-gradient(135deg,rgba(15,110,86,0.6)_0%,rgba(15,110,86,0.4)_100%)]"
+                      : "bg-[linear-gradient(135deg,rgba(167,243,208,0.25)_0%,rgba(15,110,86,0.1)_100%)] text-brand-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_6px_14px_-10px_rgba(0,0,0,0.2)] hover:bg-[linear-gradient(135deg,rgba(167,243,208,0.35)_0%,rgba(15,110,86,0.18)_100%)]"
+                  }`}
                 >
                   {trackedIds.has(product.id) ? "위시리스트 ✓" : "위시리스트 담기"}
                 </button>

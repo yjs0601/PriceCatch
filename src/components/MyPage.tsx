@@ -70,15 +70,15 @@ export default function MyPage({
 
         <div className="min-w-0 flex-1">
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded border border-ink-100 p-4 text-center">
+            <div className="rounded-2xl border border-white/50 bg-white/25 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
               <p className="text-xl font-bold text-ink-900">{tracked.length}</p>
               <p className="mt-1 text-[11px] text-ink-500">추적 중인 상품</p>
             </div>
-            <div className="rounded border border-ink-100 p-4 text-center">
+            <div className="rounded-2xl border border-white/50 bg-white/25 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
               <p className="text-xl font-bold text-ink-900">{buyTimingCount}</p>
               <p className="mt-1 text-[11px] text-ink-500">목표가 도달</p>
             </div>
-            <div className="rounded border border-ink-100 p-4 text-center">
+            <div className="rounded-2xl border border-white/50 bg-white/25 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
               <p className="text-xl font-bold text-brand-600">{formatKRW(totalSavings(tracked))}</p>
               <p className="mt-1 text-[11px] text-ink-500">이번 달 절약</p>
             </div>
@@ -90,10 +90,10 @@ export default function MyPage({
                 아직 등록한 관심 상품이 없어요.
               </p>
             ) : (
-              <div className="overflow-x-auto rounded border border-ink-100">
+              <div className="overflow-x-auto rounded-2xl border border-white/50 bg-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
                 <table className="w-full min-w-[560px] border-collapse text-sm">
                   <thead>
-                    <tr className="border-b border-ink-100 bg-ink-50">
+                    <tr className="border-b border-white/40 bg-white/20">
                       <th className="p-3 text-left text-xs font-medium text-ink-700">상품</th>
                       <th className="p-3 text-left text-xs font-medium text-ink-700">현재가</th>
                       <th className="p-3 text-left text-xs font-medium text-ink-700">목표가</th>
@@ -106,7 +106,7 @@ export default function MyPage({
                       const current = lowestPlatform(product).price;
                       const buyTiming = isBuyTiming(product);
                       return (
-                        <tr key={product.id} className="border-b border-ink-100 last:border-b-0">
+                        <tr key={product.id} className="border-b border-white/30 last:border-b-0">
                           <td className="p-3">
                             <div className="flex items-center gap-2.5">
                               <ProductThumb
@@ -161,7 +161,7 @@ export default function MyPage({
                 {tracked.map((product) => (
                   <div
                     key={product.id}
-                    className="flex items-center justify-between rounded border border-ink-100 px-4 py-3"
+                    className="flex items-center justify-between rounded-2xl border border-white/50 bg-white/25 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl"
                   >
                     <div className="flex items-center gap-2.5">
                       <ProductThumb
@@ -192,7 +192,7 @@ export default function MyPage({
 
           {tab === "account" &&
             (user ? (
-              <div className="rounded border border-ink-100 p-5">
+              <div className="rounded-2xl border border-white/50 bg-white/25 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
                 <p className="text-xs text-ink-500">이름</p>
                 <p className="mt-1 text-sm text-ink-900">{user.name}</p>
                 <p className="mt-4 text-xs text-ink-500">이메일</p>
