@@ -10,7 +10,7 @@ export default function PlatformComparison({ product }: PlatformComparisonProps)
   const lowest = sorted[0].price;
 
   return (
-    <div className="rounded border border-ink-100 bg-white p-4">
+    <div className="rounded-2xl border border-white/50 bg-white/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
       <h3 className="mb-3 font-semibold text-ink-900">쇼핑몰별 가격 비교</h3>
       <ul className="flex flex-col gap-2">
         {sorted.map((platform, index) => (

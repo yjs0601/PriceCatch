@@ -24,7 +24,7 @@ export default function PriceTrendChart({ product }: PriceTrendChartProps) {
   const [period, setPeriod] = useState("3개월");
 
   return (
-    <div className="rounded border border-ink-100 bg-white p-4">
+    <div className="rounded-2xl border border-white/50 bg-white/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_15px_30px_-15px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="font-semibold text-ink-900">가격 추이 (최근 30일)</h3>
         <p className="text-xs text-ink-500">

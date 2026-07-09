@@ -182,6 +182,12 @@ const CATEGORY_ICON: Record<string, string> = {
   뷰티: "💄",
 };
 
+const CATEGORY_IMAGE: Record<string, string> = {
+  "PC/전자기기": "/products/category-pc.png",
+  신발: "/products/category-shoes.png",
+  뷰티: "/products/category-beauty.png",
+};
+
 const WHY_ITEMS = [
   { label: "Trust", desc: "가격 추이로 판단 근거 제공" },
   { label: "Convenience", desc: "알림 오면 바로 구매까지" },
@@ -203,15 +209,31 @@ export default function Home({ products, categories, onSelectProduct, onNavigate
       <section className="mt-8">
         <h2 className="mb-3 text-center text-base font-bold text-ink-900">인기 카테고리</h2>
         <div className="border-t border-ink-100 pt-4">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {categories.map((category) => (
+          <div className="grid grid-cols-3 gap-4">
+            {categories
+              .filter((category) => category !== "가전")
+              .map((category) => (
               <button
                 key={category}
                 onClick={() => onNavigate({ name: "search", category })}
                 className="flex cursor-pointer flex-col items-center gap-2"
               >
-                <span className="flex h-[100px] w-full items-center justify-center rounded bg-ink-50 text-3xl">
-                  {CATEGORY_ICON[category] ?? "🛍️"}
+                <span
+                  className={`flex h-[100px] w-full items-center justify-center overflow-hidden rounded text-3xl ${
+                    CATEGORY_IMAGE[category] ? "" : "bg-ink-50"
+                  }`}
+                >
+                  {CATEGORY_IMAGE[category] ? (
+                    <img
+                      src={CATEGORY_IMAGE[category]}
+                      alt={category}
+                      className={`h-full w-full object-contain ${
+                        category === "신발" ? "p-3" : "p-0"
+                      }`}
+                    />
+                  ) : (
+                    CATEGORY_ICON[category] ?? "🛍️"
+                  )}
                 </span>
                 <span className="text-xs text-ink-700">{category}</span>
               </button>

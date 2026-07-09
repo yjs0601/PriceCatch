@@ -1,10 +1,10 @@
+import { useEffect, useRef, useState } from "react";
 import type { View } from "../App";
 import type { AuthUser } from "../utils/auth";
 
 type HeaderProps = {
   categories: string[];
   onNavigate: (view: View) => void;
-  onRegisterClick: () => void;
   user: AuthUser | null;
   onSignInClick: () => void;
   onSignUpClick: () => void;
@@ -16,7 +16,6 @@ type HeaderProps = {
 export default function Header({
   categories,
   onNavigate,
-  onRegisterClick,
   user,
   onSignInClick,
   onSignUpClick,
@@ -24,8 +23,25 @@ export default function Header({
   showBack,
   onBack,
 }: HeaderProps) {
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      const currentY = window.scrollY;
+      setHidden(currentY > lastScrollY.current && currentY > 80);
+      lastScrollY.current = currentY;
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-10">
+    <header
+      className={`sticky top-0 z-10 transition-transform duration-300 ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3.5">
         <div className="flex items-center gap-3">
           {showBack && (
@@ -79,12 +95,6 @@ export default function Header({
           {user ? (
             <>
               <span className="hidden text-xs text-ink-700 sm:inline">{user.name}님</span>
-              <button
-                onClick={onRegisterClick}
-                className="cursor-pointer whitespace-nowrap rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"
-              >
-                + 상품 등록
-              </button>
               <button
                 onClick={onSignOut}
                 className="cursor-pointer rounded-lg bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] px-3.5 py-2 text-xs font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(153,153,153,0.18)_100%)]"

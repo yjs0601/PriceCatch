@@ -5,12 +5,10 @@ import SearchResults from "./components/SearchResults";
 import CompareTable from "./components/CompareTable";
 import MyPage from "./components/MyPage";
 import ProductDetail from "./components/ProductDetail";
-import RegisterProductForm, { type RegisterProductInput } from "./components/RegisterProductForm";
 import AuthModal from "./components/AuthModal";
 import { mockProducts } from "./data/mockProducts";
 import { getCategories } from "./utils/categories";
 import type { AlertSettings, Product } from "./types";
-import { generateHistory } from "./utils/generateHistory";
 import { getSession, signOut, type AuthUser } from "./utils/auth";
 
 export type View =
@@ -20,34 +18,6 @@ export type View =
   | { name: "compare" }
   | { name: "mypage" };
 
-function buildProductFromInput(input: RegisterProductInput): Product {
-  const seed = Math.floor(Math.random() * 100000);
-  const history = generateHistory(seed, 30, input.targetPrice * 1.08, -600, input.targetPrice * 0.01);
-  const basePrice = history[history.length - 1].price;
-
-  return {
-    id: crypto.randomUUID(),
-    name: input.name,
-    category: input.category,
-    subCategory: "기타",
-    emoji: "🛍️",
-    rating: 4.0,
-    views: 0,
-    shippingFee: 0,
-    platforms: [
-      { name: "쿠팡", price: basePrice, url: input.url || "#" },
-      { name: "네이버쇼핑", price: Math.round((basePrice * 0.98) / 100) * 100, url: input.url || "#" },
-      { name: "11번가", price: Math.round((basePrice * 1.02) / 100) * 100, url: input.url || "#" },
-    ],
-    priceHistory: history,
-    alert: {
-      enabled: true,
-      targetPrice: input.targetPrice,
-      condition: "target_price",
-    },
-  };
-}
-
 export default function App() {
   const [products, setProducts] = useState<Product[]>(mockProducts);
   const [trackedIds, setTrackedIds] = useState<Set<string>>(
@@ -55,7 +25,6 @@ export default function App() {
   );
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [view, setView] = useState<View>({ name: "home" });
-  const [showRegister, setShowRegister] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(() => getSession());
   const [authMode, setAuthMode] = useState<"signin" | "signup" | null>(null);
 
@@ -78,14 +47,6 @@ export default function App() {
     );
   }
 
-  function handleRegister(input: RegisterProductInput) {
-    const newProduct = buildProductFromInput(input);
-    setProducts((prev) => [newProduct, ...prev]);
-    setTrackedIds((prev) => new Set(prev).add(newProduct.id));
-    setShowRegister(false);
-    setView({ name: "detail", productId: newProduct.id });
-  }
-
   function handleUpdateAlert(alert: AlertSettings) {
     if (!selectedProduct) return;
     setProducts((prev) =>
@@ -103,7 +64,6 @@ export default function App() {
       <Header
         categories={categories}
         onNavigate={setView}
-        onRegisterClick={() => setShowRegister(true)}
         user={user}
         onSignInClick={() => setAuthMode("signin")}
         onSignUpClick={() => setAuthMode("signup")}
@@ -162,10 +122,6 @@ export default function App() {
           onUpdateAlert={handleUpdateAlert}
           onToggleTrack={() => toggleTracked(selectedProduct.id)}
         />
-      )}
-
-      {showRegister && (
-        <RegisterProductForm onClose={() => setShowRegister(false)} onSubmit={handleRegister} />
       )}
 
       {authMode && (
