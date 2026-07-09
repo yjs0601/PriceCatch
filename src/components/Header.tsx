@@ -24,6 +24,7 @@ export default function Header({
   onBack,
 }: HeaderProps) {
   const [hidden, setHidden] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -70,6 +71,25 @@ export default function Header({
           >
             <span className="text-lg font-extrabold tracking-tight text-ink-900">PriceCatch</span>
             <img src="/mascot.svg" alt="" className="h-5 w-auto" />
+          </button>
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="cursor-pointer rounded-lg p-1.5 text-ink-700 backdrop-blur-2xl transition-all hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.1)_0%,rgba(153,153,153,0.1)_100%)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_20px_-8px_rgba(0,0,0,0.25)] sm:hidden"
+            aria-label="메뉴 열기"
+            aria-expanded={menuOpen}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
           </button>
         </div>
 
@@ -120,6 +140,32 @@ export default function Header({
           )}
         </div>
       </div>
+
+      {menuOpen && (
+        <nav className="flex flex-col gap-1 border-t border-white/50 bg-white/70 px-4 py-3 backdrop-blur-2xl sm:hidden">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => {
+                onNavigate({ name: "search", category });
+                setMenuOpen(false);
+              }}
+              className="cursor-pointer rounded-lg px-2 py-2 text-left text-sm text-ink-700 transition-colors hover:bg-white/60 hover:text-ink-900"
+            >
+              {category}
+            </button>
+          ))}
+          <button
+            onClick={() => {
+              onNavigate({ name: "mypage" });
+              setMenuOpen(false);
+            }}
+            className="cursor-pointer rounded-lg px-2 py-2 text-left text-sm text-ink-700 transition-colors hover:bg-white/60 hover:text-ink-900"
+          >
+            위시리스트
+          </button>
+        </nav>
+      )}
     </header>
   );
 }
