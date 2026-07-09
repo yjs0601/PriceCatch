@@ -73,7 +73,7 @@ export default function Header({
           </button>
         </div>
 
-        <nav className="hidden items-center gap-5 ml-5 sm:flex">
+        <nav className="hidden items-center gap-8 ml-5 sm:flex">
           {categories.map((category) => (
             <button
               key={category}
